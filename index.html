@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalWell - Your Digital Wellness Companion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">DigitalWell</h1>
+            <ul class="nav-menu">
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#challenges">Challenges</a></li>
+                <li><a href="#community">Community</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="container">
+                <h2>Your Digital Wellness Dashboard</h2>
+                
+                <!-- Usage Overview -->
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>Today's Screen Time</h3>
+                        <div class="metric" id="today-usage">0h 0m</div>
+                        <div class="progress-bar">
+                            <div class="progress" id="usage-progress"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Weekly Trend</h3>
+                        <canvas id="weekly-chart"></canvas>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Red Zone Alerts</h3>
+                        <div id="alerts-container">
+                            <p class="no-alerts">No alerts today!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- App Usage Breakdown -->
+                <div class="card">
+                    <h3>App Usage Breakdown</h3>
+                    <div id="app-usage-list"></div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="btn btn-primary" onclick="startStudyMode()">
+                        <i class="fas fa-book"></i> Study Mode
+                    </button>
+                    <button class="btn btn-secondary" onclick="startSleepMode()">
+                        <i class="fas fa-moon"></i> Sleep Mode
+                    </button>
+                    <button class="btn btn-accent" onclick="startChallenge()">
+                        <i class="fas fa-trophy"></i> Start Challenge
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Challenges Section -->
+        <section id="challenges" class="section">
+            <div class="container">
+                <h2>Digital Wellness Challenges</h2>
+                
+                <div class="challenge-categories">
+                    <div class="category-card">
+                        <h3>7-Day Detox</h3>
+                        <p>Reduce social media usage by 50%</p>
+                        <button class="btn btn-primary" onclick="start7DayChallenge()">Start</button>
+                    </div>
+                    
+                    <div class="category-card">
+                        <h3>21-Day Habit Builder</h3>
+                        <p>Build healthy digital habits</p>
+                        <button class="btn btn-primary" onclick="start21DayChallenge()">Start</button>
+                    </div>
+                    
+                    <div class="category-card">
+                        <h3>Daily Goals</h3>
+                        <p>Small steps for big changes</p>
+                        <button class="btn btn-primary" onclick="showDailyGoals()">View</button>
+                    </div>
+                </div>
+
+                <div id="challenge-details" class="challenge-details">
+                    <!-- Challenge content will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Section -->
+        <section id="community" class="section">
+            <div class="container">
+                <h2>Community Support</h2>
+                
+                <div class="community-features">
+                    <div class="feature-card">
+                        <h3>Peer Groups</h3>
+                        <p>Join groups with similar goals</p>
+                        <button class="btn btn-secondary">Browse Groups</button>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>Share Progress</h3>
+                        <p>Share achievements with mentors</p>
+                        <button class="btn btn-secondary">Share Now</button>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>Group Challenges</h3>
+                        <p>No Phone Sunday with friends</p>
+                        <button class="btn btn-secondary">Create Group</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings" class="section">
+            <div class="container">
+                <h2>Settings & Goals</h2>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>Daily Limits</h3>
+                        <label>Social Media (hours):</label>
+                        <input type="number" id="social-limit" min="0" max="24" value="2">
+                        
+                        <label>Entertainment (hours):</label>
+                        <input type="number" id="entertainment-limit" min="0" max="24" value="3">
+                        
+                        <button class="btn btn-primary" onclick="saveLimits()">Save Limits</button>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <h3>Lock Schedules</h3>
+                        <label>Study Mode:</label>
+                        <input type="time" id="study-start" value="09:00">
+                        <input type="time" id="study-end" value="17:00">
+                        
+                        <label>Sleep Mode:</label>
+                        <input type="time" id="sleep-start" value="22:00">
+                        <input type="time" id="sleep-end" value="07:00">
+                        
+                        <button class="btn btn-primary" onclick="saveSchedules()">Save Schedules</button>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <h3>Personal Goals</h3>
+                        <label>Why do you want to reduce usage?</label>
+                        <select id="goal-reason">
+                            <option value="health">Better Health</option>
+                            <option value="study">Focus on Studies</option>
+                            <option value="sleep">Better Sleep</option>
+                            <option value="social">More Real Connections</option>
+                        </select>
+                        
+                        <label>Weekly Goal (hours):</label>
+                        <input type="number" id="weekly-goal" min="1" max="168" value="21">
+                        
+                        <button class="btn btn-primary" onclick="saveGoals()">Save Goals</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Reflective Prompt Modal -->
+    <div id="reflect-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Daily Reflection</h3>
+            <p>How did you feel without your phone today?</p>
+            <textarea id="reflection-text" placeholder="Share your thoughts..."></textarea>
+            <button class="btn btn-primary" onclick="saveReflection()">Save Reflection</button>
+        </div>
+    </div>
+
+    <!-- Mindfulness Reminder -->
+    <div id="mindfulness-reminder" class="reminder">
+        <p>Take 5 minutes to breathe without your screen</p>
+        <button onclick="dismissReminder()">Got it!</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
